@@ -178,7 +178,15 @@ int main(void)
 			for(int i=0;i<NUM_ghostS;i++)
 				ghosts[i].Drawghost();
 
+
+
+			al_draw_textf(hudFont, al_map_rgb(255, 255, 255), 10, 10, 0, "Lives: %d", myPlayer.getLives());
+			al_draw_textf(hudFont, al_map_rgb(255, 255, 255), 10, 30, 0, "Ghosts Killed: %d", ghostKillCount);
+
 			al_flip_display();
+
+		
+
 			al_clear_to_color(al_map_rgb(0,0,0));
 		}
 	}
@@ -187,6 +195,9 @@ int main(void)
 	al_destroy_timer(timer);
 	al_destroy_display(display);						//destroy our display object
 	system("Pause");
+
+	al_destroy_font(hudFont);
+
 	return 0;
 }
 
