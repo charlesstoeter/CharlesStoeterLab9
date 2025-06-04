@@ -60,6 +60,8 @@ int main(void)
 
 	al_start_timer(timer);
 
+	ALLEGRO_FONT* hudFont = al_create_builtin_font();
+
 
 	int ghostKillCount = 0;
 
