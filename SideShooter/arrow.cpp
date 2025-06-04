@@ -38,7 +38,7 @@ void Arrow::UpdateArrow(int WIDTH)
 			live = false;
 	}
 }
-void Arrow::CollideArrow(ghost ghosts[], int cSize)
+void Arrow::CollideArrow(ghost ghosts[], int cSize, int& ghostKillCount)
 {
 	if(live)
 	{
@@ -53,6 +53,7 @@ void Arrow::CollideArrow(ghost ghosts[], int cSize)
 				{
 					live = false;
 					ghosts[j].setLive(false);
+					ghostKillCount++; // count kill
 				}
 			}
 		}

@@ -1,6 +1,8 @@
 #include <allegro5\allegro.h>
 #include <allegro5\allegro_primitives.h>
 #include <allegro5\allegro_image.h>
+#include <allegro5/allegro_font.h>
+#include <allegro5/allegro_ttf.h>
 #include "player.h"
 #include "ghost.h"
 #include "Arrow.h"
@@ -36,6 +38,9 @@ int main(void)
 	if(!display)										//test display object
 		return -1;
 
+	al_init_ttf_addon();
+
+	al_init_font_addon();
 	al_install_keyboard();
 	al_init_image_addon();
 
@@ -54,10 +59,16 @@ int main(void)
 	al_register_event_source(event_queue, al_get_display_event_source(display));
 
 	al_start_timer(timer);
+
+
+	int ghostKillCount = 0;
+
+
 	while(!done)
 	{
 		ALLEGRO_EVENT ev;
 		al_wait_for_event(event_queue, &ev);
+
 
 		if(ev.type == ALLEGRO_EVENT_TIMER)
 		{
@@ -78,7 +89,7 @@ int main(void)
 			for(int i=0;i<NUM_ghostS;i++)
 				ghosts[i].Updateghost();
 			for(int i=0;i<NUM_ArrowS;i++)
-				Arrows[i].CollideArrow(ghosts, NUM_ghostS);
+				Arrows[i].CollideArrow(ghosts, NUM_ghostS, ghostKillCount);
 			for(int i=0;i<NUM_ghostS;i++)
 				ghosts[i].Collideghost(myPlayer);
 		}
@@ -136,6 +147,24 @@ int main(void)
 				break;
 			}
 		}
+
+
+		if (myPlayer.getLives() <= 0)
+		{
+			al_clear_to_color(al_map_rgb(0, 0, 0));
+
+			ALLEGRO_FONT* font = al_create_builtin_font();
+			al_draw_text(font, al_map_rgb(255, 0, 0), 100, 100, 0, "GAME OVER");
+			al_draw_textf(font, al_map_rgb(255, 255, 255), 100, 140, 0, "Ghosts Killed: %d", ghostKillCount);
+
+			al_flip_display();
+			al_rest(5.0); // pause for 5 seconds before exiting
+
+			al_destroy_font(font);
+			break; // exit loop to end the game
+		}
+
+
 
 		if(redraw && al_is_event_queue_empty(event_queue))
 		{

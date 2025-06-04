@@ -6,12 +6,25 @@
 
 player::~player()
 {
-	al_destroy_bitmap(image);
+	for (int i = 0; i < 6; i++) {
+		if (images[i])
+			al_destroy_bitmap(images[i]);
+	}
 }
 player::player(int HEIGHT)
 {
 
-	image = al_load_bitmap("Kirby.png");
+	images[0] = al_load_bitmap("kirby0.png");
+	images[1] = al_load_bitmap("kirby1.png");
+	images[2] = al_load_bitmap("kirby2.png");
+	images[3] = al_load_bitmap("kirby3.png");
+	images[4] = al_load_bitmap("kirby4.png");
+	images[5] = al_load_bitmap("Kirby.png"); // original full-health Kirby
+
+	imageIndex = 5;
+	image = images[imageIndex];
+
+
 	x = 20;
 	y = HEIGHT / 2;
 	lives = 5;
@@ -22,7 +35,7 @@ player::player(int HEIGHT)
 }
 void player::DrawPlayer()
 {
-	al_draw_bitmap(image, x,y, 0);
+	al_draw_bitmap(images[imageIndex], x, y, 0);
 }
 void player::MoveUp()
 {
@@ -48,3 +61,16 @@ void player::MoveRight()
 	if(x > 300)
 		x = 300;
 }
+
+
+
+void player::removeLife() {
+	if (lives > 0)
+		lives--;
+
+	if (imageIndex > 0)
+		imageIndex--;
+
+	image = images[imageIndex];
+}
+

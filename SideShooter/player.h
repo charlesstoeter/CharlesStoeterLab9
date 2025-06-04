@@ -14,7 +14,9 @@ public:
 	int getBoundY(){return boundy;}
 	int getX(){return x;}
 	int getY(){return y;}
-	void removeLife(){lives--;}
+	void removeLife();
+	int getLives() { return lives; }
+
 private:
 	int x;
 	int y;
@@ -23,6 +25,9 @@ private:
 	int boundx;
 	int boundy;
 	int score;
-	ALLEGRO_BITMAP *image;
+	ALLEGRO_BITMAP* image;
+	ALLEGRO_BITMAP* images[6];
+	int imageIndex;
+	
 };
 #endif
