@@ -14,11 +14,11 @@ player::~player()
 player::player(int HEIGHT)
 {
 
-	images[0] = al_load_bitmap("kirby0.png");
-	images[1] = al_load_bitmap("kirby1.png");
+	images[0] = al_load_bitmap("kirby4.png");
+	images[1] = al_load_bitmap("kirby3.png");
 	images[2] = al_load_bitmap("kirby2.png");
-	images[3] = al_load_bitmap("kirby3.png");
-	images[4] = al_load_bitmap("kirby4.png");
+	images[3] = al_load_bitmap("kirby1.png");
+	images[4] = al_load_bitmap("kirby0.png");
 	images[5] = al_load_bitmap("Kirby.png"); // original full-health Kirby
 
 	imageIndex = 5;
